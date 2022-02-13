@@ -2,11 +2,6 @@
 
 class Controller
 {
-    public function model($model)
-    {
-        require_once '..../LSS/models/' . $model . '.php';
-        return new $model();
-    }
 
     public function view($view, $data = [])
     {
