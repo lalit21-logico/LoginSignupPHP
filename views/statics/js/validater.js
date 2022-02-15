@@ -1,5 +1,21 @@
 
-function validateForm() {
+function notify(message) {
+    $('html, body').animate({ scrollTop: 0 }, 'fast');
+    document.getElementById("notice").innerHTML = message;
+    $(".notification").show();
+    $(".notification").fadeOut(3000, 0);
+    return;
+}
+
+function notifyS(message) {
+    $('html, body').animate({ scrollTop: 0 }, 'fast');
+    document.getElementById("noticeS").innerHTML = message;
+    $(".notificationS").show();
+    $(".notificationS").fadeOut(3000, 0);
+    return;
+}
+
+function validateSignUpForm() {
 
     var fname = document.forms["signUp"]["fname"].value;
     var lname = document.forms["signUp"]["lname"].value;
@@ -10,30 +26,32 @@ function validateForm() {
 
 
     if (fname.length < 3) {
-        document.getElementById("message").innerHTML = "First Name too short";
+        notify("First Name too short");
         document.getElementById("fname").focus();
         return false;
     } else if (lname.length < 3) {
-        document.getElementById("message").innerHTML = "Last Name too short";
+        notify("Last Name too short");
         document.getElementById("lname").focus();
         return false;
     } else if (username.length < 3) {
-        document.getElementById("message").innerHTML = "User name Name too short";
+        notify("User name Name too short");
         document.getElementById("username").focus()
         return false;
     } else if (!validateEmail(email)) {
-        document.getElementById("message").innerHTML = "Please Enter Valid email";
+        notify("Please Enter Valid email");
         document.getElementById("email").focus()
         return false;
     } else if (!validatePhone(phone)) {
-        document.getElementById("message").innerHTML = "Please Enter Valid 10 digit contact number";
+        notify("Please Enter Valid 10 digit contact number");
         document.getElementById("phone").focus()
         return false;
     } else if (password.length < 8) {
-        document.getElementById("message").innerHTML = "Password too short must be length length greater then 8";
+        notify("Password too short must be length length greater then 8");
         document.getElementById("password").focus()
         return false;
     }
+
+    return true;
 
 }
 

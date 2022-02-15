@@ -5,6 +5,7 @@ class UserModel
     function __construct()
     {
         $this->conn = new mysqli('localhost', 'root', '', 'lss');
+        //$this->conn = new mysqli('sql102.epizy.com', 'epiz_31074911', 'yCZ12Xr0Rs', 'epiz_31074911_lss');
 
         if ($this->conn->connect_error) {
             die("Connection failed: " . $this->conn->connect_error);

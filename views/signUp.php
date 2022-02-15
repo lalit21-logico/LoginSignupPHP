@@ -1,5 +1,5 @@
+<?php include 'nav.php'; ?>
 <h2 class="center" id="form-label">SignUp</h2>
-
 <div class="v-form" id="signUpForm">
     <p class="text-danger" id="message"><?php
                                         if (isset($data['msg'])) {
@@ -11,7 +11,7 @@
         $userdata = $data['userData'];
     }
     ?>
-    <form name="signUp" action="index.php?act=signUp" method="post" onsubmit="return validateForm()">
+    <form name="signUp" action="index.php?act=signUp" method="post" onsubmit="return validateSignUpForm()">
         <label for="fname">First Name</label>
         <input class="form-field" type="text" id="fname" name="firstname" value="<?php echo isset($userdata) ? $userdata[0] : ""; ?>" placeholder="Your name.." required>
 
@@ -33,3 +33,5 @@
         <button class="btn-m" type="submit" value="Submit">SignUp</button>
     </form>
 </div>
+
+<?php include 'footer.php'; ?>

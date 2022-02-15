@@ -78,6 +78,7 @@ li a {
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
+  cursor: pointer;
 }
 
 li a:hover {
@@ -162,3 +163,17 @@ th, td{
 }
 
 
+
+.notification{
+  color: red;
+text-align: center;
+text-underline-position: left;
+font-size: 2rem;
+}
+
+.notificationS{
+  color: green;
+text-align: center;
+text-underline-position: left;
+font-size: 2rem;
+}
