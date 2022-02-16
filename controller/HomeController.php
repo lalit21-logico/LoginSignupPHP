@@ -13,6 +13,9 @@ class HomeController extends Controller
     public function index()
     {
         $act = isset($_GET['act']) ? $_GET['act'] : "a";
+        if (!isset($_GET['act'])) {
+            $act = $_SERVER['REQUEST_URI'];
+        }
         switch ($act) {
             case 'signUp':
                 $this->signUp();
