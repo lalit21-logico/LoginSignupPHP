@@ -68,6 +68,7 @@ class HomeController extends Controller
             header("Location: " . $this->BASE_URL . "/LSS/login");
             exit;
         }
+
         if (true == isset($_POST['userId'])) {
             $id = $this->cleanData($_POST["userId"]);
             $this->UserModel->delete($id);
@@ -138,7 +139,7 @@ class HomeController extends Controller
                 header("Location: " . $this->BASE_URL . "/LSS/admin");
                 exit;
             }
-            header("Location: " . $this->BASE_URL . "");
+            header("Location: " . $this->BASE_URL . "/LSS/");
             exit;
         }
         $data['msgS'] = $msg;
@@ -167,6 +168,10 @@ class HomeController extends Controller
     public function signUp()
     {
         if (isset($_SESSION['loggedin'])) {
+            if (isset($_SESSION['is_admin'])) {
+                header("Location: " . $this->BASE_URL . "/LSS/admin");
+                exit;
+            }
             header("Location: " . $this->BASE_URL . "/LSS/");
             exit;
         }
