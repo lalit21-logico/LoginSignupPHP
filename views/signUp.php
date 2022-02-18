@@ -1,4 +1,4 @@
-<?php include 'nav.php'; ?>
+<!-- <?php include 'nav.php'; ?>
 <h2 class="center" id="form-label">SignUp</h2>
 <div class="v-form" id="signUpForm">
     <p class="text-danger" id="message"><?php
@@ -11,7 +11,7 @@
         $userdata = $data['userData'];
     }
     ?>
-    <form name="signUp" action="index.php?act=signUp" method="post" onsubmit="return validateSignUpForm()">
+    <form name="signUp" action="signUp" method="post" onsubmit="return validateSignUpForm()">
         <label for="fname">First Name</label>
         <input class="form-field" type="text" id="fname" name="firstname" value="<?php echo isset($userdata) ? $userdata[0] : ""; ?>" placeholder="Your name.." required>
 
@@ -34,4 +34,26 @@
     </form>
 </div>
 
-<?php include 'footer.php'; ?>
+<div class="v-form" id="loginForm" hidden>
+    <p class="text-success"><?php
+                            if (isset($data['msg'])) {
+                                echo $data['msg'];
+                            } ?>
+    </p>
+    <p class="text-danger"><?php
+                            if (isset($data['msgS'])) {
+                                echo $data['msgS'];
+                            } ?>
+    </p>
+    <form id="login" action="login" method="post">
+
+        <label for="email">Email</label>
+        <input class="form-field" type="email" id="email" name="email" placeholder="Email">
+
+        <label for="password">Password</label>
+        <input class="form-field" type="password" id="password" name="password" placeholder="Password">
+
+        <button class="btn-m" type="submit" value="Submit">Login</button>
+    </form>
+</div>
+<?php include 'footer.php'; ?> -->

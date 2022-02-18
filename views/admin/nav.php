@@ -10,12 +10,12 @@
     <script src="../LSS/views/statics/js/ajax_post.js"></script>
 </head>
 
-<body class="one-page">
+<body class="admin-page">
     <ul class="broad-line" id="menu">
         <!-- <li><a class="active" href="index.php">Home</a></li> -->
-        <li><a class="active" href="/LSS/">Home</a></li>
+        <li><a class="active" href="/LSS/admin">Home</a></li>
         <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) { ?>
-            <li><a onclick="logout()">Logout</a></li>
+            <li><a href="/LSS/admin/logout">Logout</a></li>
             <!-- <button onclick="logout()" class="btn edit_btn">
                 Logout</button> -->
         <?php
@@ -27,8 +27,8 @@
 
         <?php
         } ?>
+
         <li class="right-shift">
             <?php echo isset($_SESSION['useremail']) ? $_SESSION['useremail'] : "" ?>
         </li>
-
     </ul>

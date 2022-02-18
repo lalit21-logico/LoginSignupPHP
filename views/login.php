@@ -1,8 +1,12 @@
 <?php include 'nav.php'; ?>
-<h2 id="form-label" class="center">Login</h2>
+<h2 id="form-label" class="center"><?php if (isset($data['page'])) {
+                                        echo ($data['page'] == "signUp") ? "SignUp" : "Login";
+                                    } ?></h2>
 <p class="notification" id="notice"></p>
 <p class="notificationS" id="noticeS"></p>
-<div class="v-form" id="loginForm">
+<div class="v-form" id="loginForm" <?php if (isset($data['page'])) {
+                                        echo ($data['page'] == "signUp") ? "hidden" : "";
+                                    } ?>>
     <p class="text-success"><?php
                             if (isset($data['msg'])) {
                                 echo $data['msg'];
@@ -13,7 +17,7 @@
                                 echo $data['msgS'];
                             } ?>
     </p>
-    <form id="login" action="index.php?act=login" method="post">
+    <form id="login" action="login" method="post">
 
         <label for="email">Email</label>
         <input class="form-field" type="email" id="email" name="email" placeholder="Email">
@@ -25,7 +29,9 @@
     </form>
 </div>
 
-<div class="v-form" id="signUpForm" hidden>
+<div class="v-form" id="signUpForm" <?php if (isset($data['page'])) {
+                                        echo ($data['page'] == "signUp") ? "" : "hidden";
+                                    } ?>>
     <p class="text-danger" id="message"><?php
                                         if (isset($data['msg'])) {
                                             echo $data['msg'];
@@ -36,7 +42,7 @@
         $userdata = $data['userData'];
     }
     ?>
-    <form name="signUp" action="index.php?act=signUp" method="post" onsubmit="return validateSignUpForm()">
+    <form name="signUp" action="signUp" method="post" onsubmit="return validateSignUpForm()">
         <label for="fname">First Name</label>
         <input class="form-field" type="text" id="fname" name="firstname" value="<?php echo isset($userdata) ? $userdata[0] : ""; ?>" placeholder="Your name.." required>
 
@@ -54,6 +60,13 @@
 
         <label for="password">Password</label>
         <input class="form-field" type="password" id="password" name="password" value="<?php echo isset($userdata) ? $userdata[5] : ""; ?>" placeholder="Your password.." required>
+
+        <label for="role">Register as:</label>
+        <select class="form-field" name="role" id="role">
+            <?php echo isset($userdata) ? $userdata[6] : ""; ?>
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+        </select>
 
         <button class="btn-m" type="submit" value="Submit">SignUp</button>
     </form>

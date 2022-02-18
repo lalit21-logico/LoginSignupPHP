@@ -62,7 +62,7 @@
                                 echo $data['msgS'];
                             } ?>
     </p>
-    <form id="login" action="index.php?act=login" method="post">
+    <form id="login" action="login" method="post">
 
         <label for="email">Email</label>
         <input class="form-field" type="email" id="email" name="email" placeholder="Email">
@@ -78,7 +78,7 @@
     <p class="text-danger" id="message">
     </p>
 
-    <form name="signUp" action="index.php?act=signUp" method="post" onsubmit="return validateSignUpForm()">
+    <form name="signUp" action="signUp" method="post" onsubmit="return validateSignUpForm()">
         <label for="fname">First Name</label>
         <input class="form-field" type="text" id="fname" name="firstname" value="" placeholder="Your name.." required>
 
@@ -96,6 +96,12 @@
 
         <label for="password">Password</label>
         <input class="form-field" type="password" id="password" name="password" value="" placeholder="Your password.." required>
+
+        <label for="role">Register as:</label>
+        <select class="form-field" name="role" id="role" value="<?php echo isset($userdata) ? $userdata[6] : ""; ?>">
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+        </select>
 
         <button class="btn-m" type="submit" value="Submit">SignUp</button>
     </form>

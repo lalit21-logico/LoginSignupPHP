@@ -4,23 +4,28 @@ require 'models/UserModel.php';
 
 class HomeController extends Controller
 {
-    public function __construct()
+    public function __construct($BASE_URL)
     {
         $this->UserModel =  new UserModel();
-        $this->BASE_URL = "http://localhost/LSS/index.php";
+        $this->BASE_URL = $BASE_URL;;
     }
 
     public function index()
     {
+        if (isset($_SESSION['is_admin'])) {
+            header("Location: " . $this->BASE_URL . "/LSS/admin");
+            exit;
+        }
         $act = isset($_GET['act']) ? $_GET['act'] : "a";
         if (!isset($_GET['act'])) {
             $act = $_SERVER['REQUEST_URI'];
+            // echo $act;
         }
         switch ($act) {
-            case 'signUp':
+            case '/LSS/signUp':
                 $this->signUp();
                 break;
-            case 'login':
+            case '/LSS/login':
                 $this->login();
                 break;
             case 'logout':
@@ -41,7 +46,7 @@ class HomeController extends Controller
     public function home($msg = "", $msgs = "")
     {
         if (!isset($_SESSION['loggedin'])) {
-            header("Location: " . $this->BASE_URL . "?act=login");
+            header("Location: " . $this->BASE_URL . "/LSS/login");
             exit;
         }
         $result = $this->UserModel->getUser($_SESSION['useremail']);
@@ -60,7 +65,7 @@ class HomeController extends Controller
     public function delete()
     {
         if (!isset($_SESSION['loggedin'])) {
-            header("Location: " . $this->BASE_URL . "?act=login");
+            header("Location: " . $this->BASE_URL . "/LSS/login");
             exit;
         }
         if (true == isset($_POST['userId'])) {
@@ -75,7 +80,7 @@ class HomeController extends Controller
     public function update()
     {
         if (!isset($_SESSION['loggedin'])) {
-            header("Location: " . $this->BASE_URL . "?act=login");
+            header("Location: " . $this->BASE_URL . "/LSS/login");
             exit;
         }
 
@@ -105,14 +110,14 @@ class HomeController extends Controller
             $this->UserModel->update($userdata, $id);
             $msg = 'updated success';
             echo json_encode(array("is_update" => true));
-            return;
+            return true;
         }
     }
 
     public function logout()
     {
         if (!isset($_SESSION['loggedin'])) {
-            header("Location: " . $this->BASE_URL . "?act=login");
+            header("Location: " . $this->BASE_URL . "/LSS/login");
             exit;
         }
         $_SESSION['loggedin'] = false;
@@ -122,12 +127,17 @@ class HomeController extends Controller
         $data['title'] = 'Login';
         echo json_encode(array("k" => "logout", "data" => $data));
         // $this->view('login', $data);
+        return;
     }
 
 
     public function login($msg = "")
     {
         if (isset($_SESSION['loggedin'])) {
+            if (isset($_SESSION['is_admin'])) {
+                header("Location: " . $this->BASE_URL . "/LSS/admin");
+                exit;
+            }
             header("Location: " . $this->BASE_URL . "");
             exit;
         }
@@ -138,19 +148,26 @@ class HomeController extends Controller
             if ($this->UserModel->login($email, $password)) {
                 $_SESSION['loggedin'] = true;
                 $_SESSION['useremail'] = $email;
-                header("Location: " . $this->BASE_URL . "");
+                if ($this->UserModel->checkRole($email) == "admin") {
+                    $_SESSION['is_admin'] = true;
+                    header("Location: " . $this->BASE_URL . "/LSS/admin");
+                    exit;
+                }
+                header("Location: " . $this->BASE_URL . "/LSS/");
+                exit;
             } else {
                 $data['msgS'] = 'email or password is incorrect';
             }
         }
         $data['title'] = 'Login';
+        $data['page'] = "login";
         $this->view('login', $data);
     }
 
     public function signUp()
     {
         if (isset($_SESSION['loggedin'])) {
-            header("Location: " . $this->BASE_URL . "");
+            header("Location: " . $this->BASE_URL . "/LSS/");
             exit;
         }
         if (true == isset($_POST['firstname'])) {
@@ -160,6 +177,7 @@ class HomeController extends Controller
             $email = $this->cleanData($_POST["email"]);
             $phone = $this->cleanData($_POST["phone"]);
             $password = $this->cleanData($_POST["password"]);
+            $role = $this->cleanData($_POST["role"]);
             $userdata = array(
                 $firstname,
                 $lastname,
@@ -167,25 +185,37 @@ class HomeController extends Controller
                 $email,
                 $phone,
                 $password,
+                $role,
             );
+
 
             if ($this->UserModel->alreadyExist($_POST["email"])) {
                 $data['title'] = 'signUp';
                 $data['userData'] = $userdata;
                 $data['msg'] = "email already exisit";
-                $this->view('signup', $data);
+                $data['page'] = "signUp";
+                $this->view('login', $data);
                 return;
             } else {
                 $this->UserModel->signUp($userdata);
-                $data['title'] = 'Login';
-                $_SESSION['loggedin'] = true;
-                $_SESSION['useremail'] = $email;
-                header("Location: " . $this->BASE_URL . "");
-                return;
+                if ($role == "admin") {
+                    $_SESSION['loggedin'] = true;
+                    $_SESSION['useremail'] = $email;
+                    $_SESSION['is_admin'] = true;
+                    header("Location: " . $this->BASE_URL . "/LSS/admin");
+                    return;
+                } else {
+                    $data['title'] = 'Home';
+                    $_SESSION['loggedin'] = true;
+                    $_SESSION['useremail'] = $email;
+                    header("Location: " . $this->BASE_URL . "/LSS/");
+                    return;
+                }
             }
         } else {
+            $data['page'] = "signUp";
             $data['title'] = 'signUp';
-            $this->view('signup', $data);
+            $this->view('login', $data);
         }
     }
 
