@@ -120,7 +120,8 @@
                         </td>
 
                     </tr>
-            <?php  }
+            <?php $index++;
+                }
             } ?>
         </tbody>
         <tbody id="adminList" hidden>
