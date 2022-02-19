@@ -113,6 +113,29 @@ function editData(id) {
     // document.getElementById("msg").innerHTML = "Update Now";
 }
 
+function deleteUser(id) {
+    var dataString = "userId=" + id;
+    console.log(dataString);
+    var result = confirm("Want to delete?");
+    console.log("delete");
+    if (result) {
+        $.ajax({
+            type: "POST",
+            url: "index.php?act=adminDelete",
+            data: dataString,
+            dataType: "json",
+            success: function (data) {
+                console.log("deleted");
+                notify("User Account Deleted");
+                setTimeout(function () {
+                    //alert('Reloading Page');
+                    location.reload();
+                }, 2000);
+            }
+        });
+    }
+}
+
 function deleteData(id) {
     var dataString = "userId=" + id;
     console.log(dataString);

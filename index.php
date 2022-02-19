@@ -6,7 +6,7 @@ session_start();
 $BASE_URL = "http://localhost";
 $foo = new HomeController($BASE_URL);
 $act = isset($_GET['act']) ? $_GET['act'] : "a";
-if ($act == "adminUpdate") {
+if ($act == "adminUpdate" or $act == "adminDelete") {
     $foo = new AdminController($BASE_URL);
 }
 if (substr($_SERVER['REQUEST_URI'], 0, 10) === "/LSS/admin") {

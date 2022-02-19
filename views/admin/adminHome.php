@@ -54,6 +54,7 @@
                 <th>Contact</th>
                 <th>Role</th>
                 <th>Edit</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody id="rows">
@@ -74,6 +75,11 @@
                     <td>
                         <button id="<?php echo $user['id']; ?>" onclick="editData(<?php echo $user['id']; ?>)" class="btn edit_btn">
                             Edit</i>
+                        </button>
+                    </td>
+                    <td>
+                        <button onclick="deleteUser(<?php echo $user['id']; ?>)" class="btn del_btn">
+                            Delete
                         </button>
                     </td>
                 </tr>

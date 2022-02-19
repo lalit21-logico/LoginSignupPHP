@@ -31,6 +31,15 @@ class UserModel
             return false;
         }
     }
+    public function deleteUser($id)
+    {
+        $sql = "DELETE FROM `user` WHERE `user`.`id` = $id AND `role` = 'user'";
+        if ($this->conn->query($sql)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public function getUser($email)
     {
@@ -58,7 +67,7 @@ class UserModel
 
     public function getAll()
     {
-        $sql = "SELECT * FROM `user`";
+        $sql = "SELECT * FROM `user` WHERE `user`.`role` = 'user'";
         if ($this->conn->query($sql) == true) {
             $result = mysqli_query($this->conn, $sql);
         }

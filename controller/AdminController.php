@@ -21,6 +21,9 @@ class AdminController extends Controller
             case 'adminUpdate':
                 $this->update();
                 break;
+            case "adminDelete":
+                $this->delete();
+                break;
             case '/LSS/admin/logout':
                 $this->logout();
                 break;
@@ -97,6 +100,22 @@ class AdminController extends Controller
             }
             echo json_encode(array("is_update" => true));
             return true;
+        }
+    }
+
+    public function delete()
+    {
+        if (!isset($_SESSION['loggedin']) and !isset($_SESSION['is_admin'])) {
+            echo json_encode(array("is_update" => "logout"));
+            return;
+            header("Location: " . $this->BASE_URL . "/LSS/login");
+            exit;
+        }
+
+        if (true == isset($_POST['userId'])) {
+            $id = $this->cleanData($_POST["userId"]);
+            $this->UserModel->deleteUser($id);
+            echo json_encode(array("result" => "deleted"));
         }
     }
 
