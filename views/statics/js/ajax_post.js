@@ -113,6 +113,20 @@ function editData(id) {
     // document.getElementById("msg").innerHTML = "Update Now";
 }
 
+function getList(list) {
+    console.log(list);
+    $("#selfList").hide();
+    $("#userList").hide();
+    $("#adminList").hide();
+    if (list == "self") {
+        $("#selfList").show();
+    } else if (list == "user") {
+        $("#userList").show();
+    } else if (list == "admin") {
+        $("#adminList").show();
+    }
+}
+
 function deleteUser(id) {
     var dataString = "userId=" + id;
     console.log(dataString);

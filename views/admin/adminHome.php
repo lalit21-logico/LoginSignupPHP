@@ -43,6 +43,12 @@
             </div>
         </div>
     </div>
+    <div class="button-update">
+        <button class="btn " onclick="getList('self')">My</button>
+        <button class="btn" onclick="getList('user')">User List</button>
+        <button class="btn" onclick="getList('admin')">Admin List</button>
+    </div>
+
     <table class="table">
         <thead>
             <tr>
@@ -58,7 +64,7 @@
             </tr>
         </thead>
 
-        <tbody id="rows">
+        <tbody id="selfList">
             <?php
             $userdata = $data['userdata'];
             foreach ($userdata as $user) {
@@ -80,38 +86,28 @@
                         </td>
                         <td>
                         </td>
-                        <!-- <td>
-                            <button onclick="deleteUser(<?php echo $user['id']; ?>)" class="btn del_btn">
-                                Delete
-                            </button>
-                        </td> -->
-
                     </tr>
             <?php
                 }
             } ?>
         </tbody>
 
-        <tbody id="rows">
+        <tbody id="userList" hidden>
             <?php
             $userdata = $data['userdata'];
             $index = 1;
             foreach ($userdata as $user) {
-
+                if ($user['role'] == "user") {
             ?>
-                <tr>
-                    <td><?php echo $index ?></td>
-                    <td id="Rfname<?php echo $user['id']; ?>"><?php echo $user['fname']; ?></td>
-                    <td id="Rlname<?php echo $user['id']; ?>"><?php echo $user['lname']; ?></td>
-                    <td id="Rusername<?php echo $user['id']; ?>"><?php echo $user['username']; ?></td>
-                    <td id="Remail<?php echo $user['id']; ?>"><?php echo $user['email']; ?></td>
-                    <td id="Rcontact<?php echo $user['id']; ?>"><?php echo $user['contact']; ?></td>
-                    <td id="Rrole<?php echo $user['id']; ?>"><?php echo $user['role']; ?></td>
-                    <?php if ($user['role'] == "admin") { ?>
-                        <td colspan="2">
-                            ADMIN
-                        </td>
-                    <?php } else { ?>
+                    <tr>
+                        <td><?php echo $index ?></td>
+                        <td id="Rfname<?php echo $user['id']; ?>"><?php echo $user['fname']; ?></td>
+                        <td id="Rlname<?php echo $user['id']; ?>"><?php echo $user['lname']; ?></td>
+                        <td id="Rusername<?php echo $user['id']; ?>"><?php echo $user['username']; ?></td>
+                        <td id="Remail<?php echo $user['id']; ?>"><?php echo $user['email']; ?></td>
+                        <td id="Rcontact<?php echo $user['id']; ?>"><?php echo $user['contact']; ?></td>
+                        <td id="Rrole<?php echo $user['id']; ?>"><?php echo $user['role']; ?></td>
+
                         <td>
                             <button id="<?php echo $user['id']; ?>" onclick="editData(<?php echo $user['id']; ?>)" class="btn edit_btn">
                                 Edit</i>
@@ -122,9 +118,34 @@
                                 Delete
                             </button>
                         </td>
-                    <?php } ?>
-                </tr>
+
+                    </tr>
+            <?php  }
+            } ?>
+        </tbody>
+        <tbody id="adminList" hidden>
+            <?php
+            $userdata = $data['userdata'];
+            $index = 1;
+            foreach ($userdata as $user) {
+                if ($user['role'] == "admin" and $_SESSION['useremail'] != $user['email']) {
+            ?>
+                    <tr>
+                        <td><?php echo $index ?></td>
+                        <td id="Rfname<?php echo $user['id']; ?>"><?php echo $user['fname']; ?></td>
+                        <td id="Rlname<?php echo $user['id']; ?>"><?php echo $user['lname']; ?></td>
+                        <td id="Rusername<?php echo $user['id']; ?>"><?php echo $user['username']; ?></td>
+                        <td id="Remail<?php echo $user['id']; ?>"><?php echo $user['email']; ?></td>
+                        <td id="Rcontact<?php echo $user['id']; ?>"><?php echo $user['contact']; ?></td>
+                        <td id="Rrole<?php echo $user['id']; ?>"><?php echo $user['role']; ?></td>
+
+                        <td colspan="2">
+                            ADMIN
+                        </td>
+
+                    </tr>
             <?php $index++;
+                }
             } ?>
         </tbody>
     </table>
