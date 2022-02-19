@@ -103,8 +103,8 @@ function editData(id) {
     var Rrole = document.getElementById('Rrole' + id).innerHTML;
 
     document.getElementById('userId').value = id;
-    document.getElementById('lname').value = Rfname;
-    document.getElementById('fname').value = Rlname;
+    document.getElementById('fname').value = Rfname;
+    document.getElementById('lname').value = Rlname;
     document.getElementById('username').value = Rusername;
     document.getElementById('email').value = Remail;
     document.getElementById('phone').value = Rcontact;
