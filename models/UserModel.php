@@ -67,7 +67,7 @@ class UserModel
 
     public function getAll()
     {
-        $sql = "SELECT * FROM `user` WHERE `user`.`role` = 'user'";
+        $sql = "SELECT * FROM `user`";
         if ($this->conn->query($sql) == true) {
             $result = mysqli_query($this->conn, $sql);
         }

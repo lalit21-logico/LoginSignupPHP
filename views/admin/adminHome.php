@@ -57,6 +57,41 @@
                 <th>Delete</th>
             </tr>
         </thead>
+
+        <tbody id="rows">
+            <?php
+            $userdata = $data['userdata'];
+            foreach ($userdata as $user) {
+                if ($_SESSION['useremail'] == $user['email']) {
+            ?>
+                    <tr>
+                        <td>Your Details</td>
+                        <td id="Rfname<?php echo $user['id']; ?>"><?php echo $user['fname']; ?></td>
+                        <td id="Rlname<?php echo $user['id']; ?>"><?php echo $user['lname']; ?></td>
+                        <td id="Rusername<?php echo $user['id']; ?>"><?php echo $user['username']; ?></td>
+                        <td id="Remail<?php echo $user['id']; ?>"><?php echo $user['email']; ?></td>
+                        <td id="Rcontact<?php echo $user['id']; ?>"><?php echo $user['contact']; ?></td>
+                        <td id="Rrole<?php echo $user['id']; ?>"><?php echo $user['role']; ?></td>
+
+                        <td>
+                            <button id="<?php echo $user['id']; ?>" onclick="editData(<?php echo $user['id']; ?>)" class="btn edit_btn">
+                                Edit</i>
+                            </button>
+                        </td>
+                        <td>
+                        </td>
+                        <!-- <td>
+                            <button onclick="deleteUser(<?php echo $user['id']; ?>)" class="btn del_btn">
+                                Delete
+                            </button>
+                        </td> -->
+
+                    </tr>
+            <?php
+                }
+            } ?>
+        </tbody>
+
         <tbody id="rows">
             <?php
             $userdata = $data['userdata'];
@@ -72,16 +107,22 @@
                     <td id="Remail<?php echo $user['id']; ?>"><?php echo $user['email']; ?></td>
                     <td id="Rcontact<?php echo $user['id']; ?>"><?php echo $user['contact']; ?></td>
                     <td id="Rrole<?php echo $user['id']; ?>"><?php echo $user['role']; ?></td>
-                    <td>
-                        <button id="<?php echo $user['id']; ?>" onclick="editData(<?php echo $user['id']; ?>)" class="btn edit_btn">
-                            Edit</i>
-                        </button>
-                    </td>
-                    <td>
-                        <button onclick="deleteUser(<?php echo $user['id']; ?>)" class="btn del_btn">
-                            Delete
-                        </button>
-                    </td>
+                    <?php if ($user['role'] == "admin") { ?>
+                        <td colspan="2">
+                            ADMIN
+                        </td>
+                    <?php } else { ?>
+                        <td>
+                            <button id="<?php echo $user['id']; ?>" onclick="editData(<?php echo $user['id']; ?>)" class="btn edit_btn">
+                                Edit</i>
+                            </button>
+                        </td>
+                        <td>
+                            <button onclick="deleteUser(<?php echo $user['id']; ?>)" class="btn del_btn">
+                                Delete
+                            </button>
+                        </td>
+                    <?php } ?>
                 </tr>
             <?php $index++;
             } ?>

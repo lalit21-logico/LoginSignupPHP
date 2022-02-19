@@ -124,7 +124,7 @@ li a:hover {
 }
 
 .table{
-    width: -moz-available;
+  width: 100%;  
     border: 2px solid #bbb;
     margin: 30px auto;
     border-collapse: collapse;
